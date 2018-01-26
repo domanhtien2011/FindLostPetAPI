@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180123151028) do
+ActiveRecord::Schema.define(version: 20180126125200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20180123151028) do
     t.bigint "lost_pet_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "age"
     t.index ["lost_pet_id"], name: "index_lost_features_on_lost_pet_id"
   end
 
@@ -37,7 +38,6 @@ ActiveRecord::Schema.define(version: 20180123151028) do
   create_table "lost_pets", force: :cascade do |t|
     t.string "name"
     t.integer "type"
-    t.decimal "age"
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
