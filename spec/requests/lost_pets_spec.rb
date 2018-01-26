@@ -8,7 +8,14 @@ RSpec.describe 'LostPets API', type: :request do
     LostPet.all
   end
 
-
+  let(:name) { 'captain_u23_vn' }
+  let(:lost_time) { Time.current }
+  let(:breed) { 'dog' }
+  let(:weight) { 5.5 }
+  let(:fur_color) { 'Vàng xanh' }
+  let(:others) { 'Mắt nâu đỏ, huyền đề 4 chân, đốm lưỡi' }
+  let(:age) { 2.5 }
+  let(:district) { 'Tân Bình' }
   let(:lost_pet_id) { lost_pets.first.id }
 
   describe 'GET /lost_pets' do
@@ -21,9 +28,9 @@ RSpec.describe 'LostPets API', type: :request do
       expect(json.size).to eq(10)
     end
 
-      it 'returns status code 200' do
-        expect(response).to have_http_status(200)
-      end
+    it 'returns status code 200' do
+      expect(response).to have_http_status(200)
+    end
   end
 
   # Test suite for GET /lost_pets/:id
@@ -54,60 +61,132 @@ RSpec.describe 'LostPets API', type: :request do
     end
   end
 
-  # # Test suite for POST /lost_pets
-  # describe 'POST /lost_pets' do
-  #   # valid payload
-  #   let(:valid_attributes) { { title: 'Learn Elm', created_by: '1' } }
+  # Test suite for POST /lost_pets
+  describe 'POST /lost_pets' do
+    # valid payload
+    let(:valid_attributes) do
+      {
+        name:      name,
+        lost_time: lost_time,
+        breed:     breed,
+        weight:    weight,
+        fur_color: fur_color,
+        others:    others,
+        age:       age,
+        city:      'Hồ Chí Minh',
+        district:  district
+      }
+    end
 
-  #   context 'when the request is valid' do
-  #     before { post '/lost_pets', params: valid_attributes }
+    context 'when the request is valid' do
+      before { post '/lost_pets', params: valid_attributes }
 
-  #     it 'creates a todo' do
-  #       expect(json['title']).to eq('Learn Elm')
-  #     end
+      it 'creates a lost pet' do
+        expect(json['name']).to eq("#{name}")
+      end
 
-  #     it 'returns status code 201' do
-  #       expect(response).to have_http_status(201)
-  #     end
-  #   end
+      it 'returns status code 201' do
+        expect(response).to have_http_status(201)
+      end
+    end
 
-  #   context 'when the request is invalid' do
-  #     before { post '/lost_pets', params: { title: 'Foobar' } }
+    context 'when the request is invalid' do
+      let(:invalid_lost_pet) do
+        { lost_time: lost_time,
+          breed:     breed }
+      end
 
-  #     it 'returns status code 422' do
-  #       expect(response).to have_http_status(422)
-  #     end
+      let(:invalid_lost_feature) do
+        {
+          name:      name,
+          lost_time: lost_time,
+          breed:     breed,
+          fur_color: fur_color,
+          others:    others,
+          age:       age
+        }
+      end
 
-  #     it 'returns a validation failure message' do
-  #       expect(response.body)
-  #         .to match(/Validation failed: Created by can't be blank/)
-  #     end
-  #   end
-  # end
+      let(:invalid_lost_location) do
+        {
+          name:      name,
+          lost_time: lost_time,
+          breed:     breed,
+          weight:    weight,
+          fur_color: fur_color,
+          others:    others,
+          age:       age,
+          district:  district
+        }
+      end
 
-  # # Test suite for PUT /lost_pets/:id
-  # describe 'PUT /lost_pets/:id' do
-  #   let(:valid_attributes) { { title: 'Shopping' } }
+      context 'invalid lost pet' do
+        before do
+          post '/lost_pets',
+               params: invalid_lost_pet
+        end
+        it 'returns status code 422' do
+          expect(response).to have_http_status(422)
+        end
+        it 'returns a validation failure message' do
+          expect(response.body)
+            .to match(/Validation failed: Name can't be blank/)
+        end
+      end
 
-  #   context 'when the record exists' do
-  #     before { put "/lost_pets/#{todo_id}", params: valid_attributes }
+      context 'invalid lost feature' do
+        before do
+          post '/lost_pets',
+               params: invalid_lost_feature
+        end
+        it 'returns status code 422' do
+          expect(response).to have_http_status(422)
+        end
+        it 'returns a validation failure message' do
+          expect(response.body)
+            .to match(/Validation failed: Weight can't be blank/)
+        end
+      end
 
-  #     it 'updates the record' do
-  #       expect(response.body).to be_empty
-  #     end
+      context 'invalid lost location' do
+        before do
+          post '/lost_pets',
+               params: invalid_lost_location
+        end
+        it 'returns status code 422' do
+          expect(response).to have_http_status(422)
+        end
+        it 'returns a validation failure message' do
+          expect(response.body)
+            .to match(/Validation failed: City can't be blank/)
+        end
+      end
+    end
+  end
 
-  #     it 'returns status code 204' do
-  #       expect(response).to have_http_status(204)
-  #     end
-  #   end
-  # end
+# # Test suite for PUT /lost_pets/:id
+# describe 'PUT /lost_pets/:id' do
+#   let(:valid_attributes) { { title: 'Shopping' } }
 
-  # # Test suite for DELETE /lost_pets/:id
-  # describe 'DELETE /lost_pets/:id' do
-  #   before { delete "/lost_pets/#{todo_id}" }
+#   context 'when the record exists' do
+#     before { put "/lost_pets/#{todo_id}", params: valid_attributes }
 
-  #   it 'returns status code 204' do
-  #     expect(response).to have_http_status(204)
-  #   end
-  # end
+#     it 'updates the record' do
+#       expect(response.body).to be_empty
+#     end
+
+#     it 'returns status code 204' do
+#       expect(response).to have_http_status(204)
+#     end
+#   end
+# end
+
+# # Test suite for DELETE /lost_pets/:id
+# describe 'DELETE /lost_pets/:id' do
+#   before { delete "/lost_pets/#{todo_id}" }
+
+#   it 'returns status code 204' do
+#     expect(response).to have_http_status(204)
+#   end
+# end
 end
