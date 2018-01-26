@@ -1,0 +1,2 @@
+class LostPetsController < ApplicationController
+end
