@@ -30,5 +30,6 @@ module FindLostPets
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     config.time_zone = 'Asia/Bangkok'
+    config.i18n.default_locale = :'vi'
   end
 end

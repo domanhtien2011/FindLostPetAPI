@@ -34,7 +34,7 @@ guard :rspec, cmd: "bundle exec rspec" do
   rspec = dsl.rspec
   watch(rspec.spec_helper) { rspec.spec_dir }
   watch(rspec.spec_support) { rspec.spec_dir }
-  watch(rspec.spec_files) 
+  watch(rspec.spec_files)
 
   # Ruby files
   ruby = dsl.ruby
@@ -66,6 +66,6 @@ guard :rspec, cmd: "bundle exec rspec" do
   # Turnip features and steps
   watch(%r{^spec/acceptance/(.+)\.feature$})
   watch(%r{^spec/acceptance/steps/(.+)_steps\.rb$}) do |m|
-    Dir[File.join("**/#{m[1]}.feature")][0] || "spec/acceptance"
+    Dir[File.join("**/#{m[1]}.feature")][0] || 'spec/acceptance'
   end
 end
