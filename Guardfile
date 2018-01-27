@@ -54,10 +54,15 @@ guard :rspec, cmd: "bundle exec rspec" do
   end
 
   # Rails config changes
+  run_request_rspec_files = -> { "#{rspec.spec_dir}/requests" }
   watch(rails.spec_helper) { rspec.spec_dir }
   watch(rails.routes) { "#{rspec.spec_dir}/routing" }
-  watch(rails.app_controller) { "#{rspec.spec_dir}/requests" }
-  watch(%r{^app/(controllers/concerns/.+)\.rb$}) { "#{rspec.spec_dir}/requests" }
+  watch(rails.app_controller, &run_request_rspec_files)
+  controller_concern_files = %r{^app/(controllers/concerns/.+)\.rb$}
+  locale_files             = %r{^config/(locales/.+)\.yml$}
+  watch(controller_concern_files, &run_request_rspec_files)
+  watch(locale_files, &run_request_rspec_files)
+  # watch(%r{^config/(locales/.+)\.yml$}) { "#{rspec.spec_dir}/requests" }
 
   # Capybara features specs
   watch(rails.view_dirs) { |m| rspec.spec.call("features/#{m[1]}") }

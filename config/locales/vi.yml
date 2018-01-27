@@ -2,11 +2,11 @@
 vi:
   activerecord:
     attributes:
-      lost_pets:
+      lost_pet:
         name: Tên thú cưng
         lost_time: Thời gian thú cưng bị mất
         breed: Loại thú cưng
-      lost_features:
+      lost_feature:
         weight: Cân nặng thú cưng
         fur_color: Màu lông thú cưng
         age: Tuổi thú cưng

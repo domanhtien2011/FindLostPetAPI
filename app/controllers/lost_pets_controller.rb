@@ -1,4 +1,5 @@
 class LostPetsController < ApplicationController
+
   def index
     @lost_pets = LostPet.all
     json_response(@lost_pets)
@@ -28,14 +29,18 @@ class LostPetsController < ApplicationController
 
     def lost_feature_params
       params.require(:lost_feature).permit(:weight,
-                                       :fur_color,
-                                       :others,
-                                       :age)
+                                           :fur_color,
+                                           :others,
+                                           :age)
     end
 
     def lost_location_params
       params.require(:lost_location).permit(:city,
                                             :district)
     end
+
+    # def set_lost_pet
+    #   @lost_pet = LostPet.find(params[:id])
+    # end
 
 end
