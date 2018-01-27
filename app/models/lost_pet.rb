@@ -12,9 +12,9 @@
 #
 
 class LostPet < ApplicationRecord
-  enum status: %w(finding found)
-  enum breed: %w(dog cat other)
+  enum status: %w[finding found]
+  enum breed: %w[dog cat other]
   has_one :lost_location, dependent: :destroy
   has_one :lost_feature, dependent: :destroy
-  validates_presence_of %i(name lost_time breed status)
+  validates_presence_of %i[name lost_time breed status]
 end

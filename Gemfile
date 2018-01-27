@@ -52,3 +52,9 @@ group :test do
 end
 
 gem 'awesome_print'
+
+# Central point to collect locale data for use in Ruby on Rails.
+gem 'rails-i18n', '~> 5.0.0'
+
+# i18n-tasks helps you find and manage missing and unused translations.
+gem 'i18n-tasks', '~> 0.9.20'

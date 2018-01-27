@@ -155,7 +155,7 @@ RSpec.describe 'LostPets API', type: :request do
         end
         it 'returns a validation failure message' do
           expect(response.body)
-            .to match(/Validation failed: Name can't be blank/)
+            .to match(/Có các lỗi sau: Tên thú cưng không thể để trắng/)
         end
       end
 
@@ -169,7 +169,7 @@ RSpec.describe 'LostPets API', type: :request do
         end
         it 'returns a validation failure message' do
           expect(response.body)
-            .to match(/Validation failed: Weight can't be blank/)
+            .to match(/Có các lỗi sau: Cân nặng thú cưng không thể để trắng/)
         end
       end
 
@@ -183,7 +183,7 @@ RSpec.describe 'LostPets API', type: :request do
         end
         it 'returns a validation failure message' do
           expect(response.body)
-            .to match(/Validation failed: City can't be blank/)
+            .to match(/Có các lỗi sau: Thành phố không thể để trắng/)
         end
       end
     end
