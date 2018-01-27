@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'LostPets API', type: :request do
+  let(:user) { create(:user) }
   let!(:lost_pets) do
     10.times do
       create(:lost_pet, :with_lost_feature_and_lost_location)
@@ -18,6 +19,7 @@ RSpec.describe 'LostPets API', type: :request do
   let(:city) { 'Hồ Chí Minh' }
   let(:district) { 'Tân Bình' }
   let(:lost_pet_id) { lost_pets.first.id }
+  let(:user_id) { user.id }
 
   describe 'GET /lost_pets' do
 
@@ -68,6 +70,7 @@ RSpec.describe 'LostPets API', type: :request do
     let(:valid_attributes) do
       {
         lost_pet:      {
+          user_id:   user_id,
           name:      name,
           lost_time: lost_time,
           breed:     breed
@@ -101,6 +104,7 @@ RSpec.describe 'LostPets API', type: :request do
       let(:invalid_lost_pet) do
         {
           lost_pet: {
+            user_id:   user_id,
             lost_time: lost_time,
             breed:     breed
           }
@@ -110,6 +114,7 @@ RSpec.describe 'LostPets API', type: :request do
       let(:invalid_lost_feature) do
         {
           lost_pet:      {
+            user_id:   user_id,
             name:      name,
             lost_time: lost_time,
             breed:     breed
@@ -129,6 +134,7 @@ RSpec.describe 'LostPets API', type: :request do
       let(:invalid_lost_location) do
         {
           lost_pet:      {
+            user_id:   user_id,
             name:      name,
             lost_time: lost_time,
             breed:     breed

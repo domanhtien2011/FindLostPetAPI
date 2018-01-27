@@ -59,8 +59,10 @@ guard :rspec, cmd: "bundle exec rspec" do
   controller_concern_files = %r{^app/(controllers/concerns/.+)\.rb$}
   locale_files             = %r{^config/(locales/.+)\.yml$}
   lib_files                = %r{^app(/lib/.+)\.rb$}
+  route_file               = rails.routes
   watch(rails.spec_helper) { rspec.spec_dir }
-  watch(rails.routes) { "#{rspec.spec_dir}/routing" }
+  watch(route_file) { "#{rspec.spec_dir}/routing" }
+  watch(route_file, &run_request_rspec_files)
   watch(rails.app_controller, &run_request_rspec_files)
   watch(controller_concern_files, &run_request_rspec_files)
   watch(locale_files, &run_request_rspec_files)

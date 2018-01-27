@@ -24,7 +24,8 @@ class LostPetsController < ApplicationController
     def lost_pet_params
       params.require(:lost_pet).permit(:name,
                                        :lost_time,
-                                       :breed)
+                                       :breed,
+                                       :user_id)
     end
 
     def lost_feature_params
