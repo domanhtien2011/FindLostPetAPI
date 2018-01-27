@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe AuthorizeApiRequest do
   let(:user) { create(:user) }
   # Mock `Authorization` header
-  let(:header) { { 'Authorization' => token_generator(user_id) } }
+  let(:header) { { 'Authorization' => token_generator(user.id) } }
   subject(:invalid_request_obj) { described_class.new({}) }
   subject(:request_obj) { described_class.new(header) }
 
@@ -31,7 +31,7 @@ RSpec.describe AuthorizeApiRequest do
         end
 
         it 'raises an InvalidToken error' do
-          expect { invalid_request_obj.call }.to raise_error(ExceptionHandler::InvalidToken, /Invalid Token/)
+          expect { invalid_request_obj.call }.to raise_error(ExceptionHandler::InvalidToken, /Invalid token/)
         end
       end
 

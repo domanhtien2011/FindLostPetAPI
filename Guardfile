@@ -53,18 +53,18 @@ guard :rspec, cmd: "bundle exec rspec" do
     ]
   end
 
-  # run the lib specs when a file in lib/ changes
-  watch(%r{^lib/(.+)\.rb$}) { |m| "spec/lib/#{m[1]}_spec.rb" }
-
   # Rails config changes
-  run_request_rspec_files = -> { "#{rspec.spec_dir}/requests" }
+  run_request_rspec_files  = -> { "#{rspec.spec_dir}/requests" }
+  run_auth_rspec_files     = -> { "#{rspec.spec_dir}/auth" }
+  controller_concern_files = %r{^app/(controllers/concerns/.+)\.rb$}
+  locale_files             = %r{^config/(locales/.+)\.yml$}
+  lib_files                = %r{^app(/lib/.+)\.rb$}
   watch(rails.spec_helper) { rspec.spec_dir }
   watch(rails.routes) { "#{rspec.spec_dir}/routing" }
   watch(rails.app_controller, &run_request_rspec_files)
-  controller_concern_files = %r{^app/(controllers/concerns/.+)\.rb$}
-  locale_files             = %r{^config/(locales/.+)\.yml$}
   watch(controller_concern_files, &run_request_rspec_files)
   watch(locale_files, &run_request_rspec_files)
+  watch(lib_files, &run_auth_rspec_files)
 
   # Capybara features specs
   watch(rails.view_dirs) { |m| rspec.spec.call("features/#{m[1]}") }
