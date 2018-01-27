@@ -15,6 +15,7 @@ RSpec.describe 'LostPets API', type: :request do
   let(:fur_color) { 'Vàng xanh' }
   let(:others) { 'Mắt nâu đỏ, huyền đề 4 chân, đốm lưỡi' }
   let(:age) { 2.5 }
+  let(:city) { 'Hồ Chí Minh' }
   let(:district) { 'Tân Bình' }
   let(:lost_pet_id) { lost_pets.first.id }
 
@@ -66,15 +67,21 @@ RSpec.describe 'LostPets API', type: :request do
     # valid payload
     let(:valid_attributes) do
       {
-        name:      name,
-        lost_time: lost_time,
-        breed:     breed,
-        weight:    weight,
-        fur_color: fur_color,
-        others:    others,
-        age:       age,
-        city:      'Hồ Chí Minh',
-        district:  district
+        lost_pet:      {
+          name:      name,
+          lost_time: lost_time,
+          breed:     breed
+        },
+        lost_feature:  {
+          weight:    weight,
+          fur_color: fur_color,
+          others:    others,
+          age:       age
+        },
+        lost_location: {
+          city:     city,
+          district: district
+        }
       }
     end
 
@@ -82,7 +89,7 @@ RSpec.describe 'LostPets API', type: :request do
       before { post '/lost_pets', params: valid_attributes }
 
       it 'creates a lost pet' do
-        expect(json['name']).to eq("#{name}")
+        expect(json['name']).to eq(name)
       end
 
       it 'returns status code 201' do
@@ -92,31 +99,49 @@ RSpec.describe 'LostPets API', type: :request do
 
     context 'when the request is invalid' do
       let(:invalid_lost_pet) do
-        { lost_time: lost_time,
-          breed:     breed }
+        {
+          lost_pet: {
+            lost_time: lost_time,
+            breed:     breed
+          }
+        }
       end
 
       let(:invalid_lost_feature) do
         {
-          name:      name,
-          lost_time: lost_time,
-          breed:     breed,
-          fur_color: fur_color,
-          others:    others,
-          age:       age
+          lost_pet:      {
+            name:      name,
+            lost_time: lost_time,
+            breed:     breed
+          },
+          lost_feature:  {
+            fur_color: fur_color,
+            others:    others,
+            age:       age
+          },
+          lost_location: {
+            city:     city,
+            district: district
+          }
         }
       end
 
       let(:invalid_lost_location) do
         {
-          name:      name,
-          lost_time: lost_time,
-          breed:     breed,
-          weight:    weight,
-          fur_color: fur_color,
-          others:    others,
-          age:       age,
-          district:  district
+          lost_pet:      {
+            name:      name,
+            lost_time: lost_time,
+            breed:     breed
+          },
+          lost_feature:  {
+            weight:    weight,
+            fur_color: fur_color,
+            others:    others,
+            age:       age
+          },
+          lost_location: {
+            district: district
+          }
         }
       end
 
