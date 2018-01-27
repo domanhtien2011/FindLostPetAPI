@@ -1,4 +1,7 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
+require 'simplecov'
+SimpleCov.start
+
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
@@ -64,7 +67,8 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   config.include FactoryBot::Syntax::Methods
-  config.include RequestSpecHelper, type: :request
+  config.include RequestSpecHelper
+  config.include ControllerSpecHelper
 
   config.before(:suite) do
     if config.use_transactional_fixtures?

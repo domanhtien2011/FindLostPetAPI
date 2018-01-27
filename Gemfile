@@ -49,6 +49,7 @@ group :test do
   gem 'shoulda-matchers', '~> 3.1'
   gem 'faker'
   gem 'database_cleaner'
+  gem 'simplecov', :require => false, :group => :test
 end
 
 # Awesome Print is a Ruby library that pretty prints Ruby objects in full color exposing their internal structure with proper indentation. Rails ActiveRecord objects and usage within Rails templates are supported via included mixins.

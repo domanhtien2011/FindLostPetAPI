@@ -3,15 +3,15 @@ module ExceptionHandler
   extend ActiveSupport::Concern
 
   class AuthenticationError < StandardError
-    
+
   end
 
   class MissingToken < StandardError
-    
+
   end
 
   class InvalidToken < StandardError
-    
+
   end
 
   included do
@@ -32,11 +32,11 @@ module ExceptionHandler
   private
     # JSON response with message; Status code 422 - unprocessable entity
     def four_twenty_two(e)
-      json_response({message: e.message}, :unprocessable_entity)
+      json_response({ message: e.message }, :unprocessable_entity)
     end
 
     # JSON response with message; Status code 401 - Unauthorized
     def unauthorized_request(e)
-      json_response({message: e.message}, :unauthorized)
+      json_response({ message: e.message }, :unauthorized)
     end
 end

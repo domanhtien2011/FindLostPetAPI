@@ -53,6 +53,9 @@ guard :rspec, cmd: "bundle exec rspec" do
     ]
   end
 
+  # run the lib specs when a file in lib/ changes
+  watch(%r{^lib/(.+)\.rb$}) { |m| "spec/lib/#{m[1]}_spec.rb" }
+
   # Rails config changes
   run_request_rspec_files = -> { "#{rspec.spec_dir}/requests" }
   watch(rails.spec_helper) { rspec.spec_dir }
@@ -62,7 +65,6 @@ guard :rspec, cmd: "bundle exec rspec" do
   locale_files             = %r{^config/(locales/.+)\.yml$}
   watch(controller_concern_files, &run_request_rspec_files)
   watch(locale_files, &run_request_rspec_files)
-  # watch(%r{^config/(locales/.+)\.yml$}) { "#{rspec.spec_dir}/requests" }
 
   # Capybara features specs
   watch(rails.view_dirs) { |m| rspec.spec.call("features/#{m[1]}") }
