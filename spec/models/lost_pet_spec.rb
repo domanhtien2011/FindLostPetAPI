@@ -9,6 +9,7 @@
 #  updated_at :datetime         not null
 #  lost_time  :datetime
 #  breed      :integer
+#  user_id    :integer
 #
 
 require 'rails_helper'
