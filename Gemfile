@@ -17,7 +17,7 @@ gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -49,8 +49,10 @@ group :test do
   gem 'shoulda-matchers', '~> 3.1'
   gem 'faker'
   gem 'database_cleaner'
+  gem 'simplecov', :require => false, :group => :test
 end
 
+# Awesome Print is a Ruby library that pretty prints Ruby objects in full color exposing their internal structure with proper indentation. Rails ActiveRecord objects and usage within Rails templates are supported via included mixins.
 gem 'awesome_print'
 
 # Central point to collect locale data for use in Ruby on Rails.
@@ -58,3 +60,6 @@ gem 'rails-i18n', '~> 5.0.0'
 
 # i18n-tasks helps you find and manage missing and unused translations.
 gem 'i18n-tasks', '~> 0.9.20'
+
+# A pure ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard.
+gem 'jwt'
