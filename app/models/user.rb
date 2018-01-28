@@ -12,6 +12,9 @@
 #
 
 class User < ApplicationRecord
+  has_secure_password
+
   has_many :lost_pets
   validates_presence_of %i[name phone email password_digest]
+  validates_uniqueness_of :email
 end

@@ -1,9 +1,18 @@
 FactoryBot.define do
+
+  factory :user do
+    name { Faker::Name.name }
+    sequence(:email) { |n| "#{name.split(' ').join('_')}_#{n}_@gmail.com" }
+    phone { '123456789' }
+    password 'password'
+  end
+
   factory :lost_pet do
     name { Faker::Name.name }
     breed 'dog'
     status 'finding'
     lost_time { Time.current }
+    user
     trait :with_lost_feature_and_lost_location do
       after(:create) do |lost_pet|
         create(:lost_feature, lost_pet: lost_pet)
