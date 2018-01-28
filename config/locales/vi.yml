@@ -2,6 +2,10 @@
 vi:
   activerecord:
     attributes:
+      user:
+        name: Tên
+        password: Mật khẩu
+        phone: Số điện thoại
       lost_pet:
         name: Tên thú cưng
         lost_time: Thời gian thú cưng bị mất

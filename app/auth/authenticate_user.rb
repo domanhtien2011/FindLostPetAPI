@@ -1,4 +1,5 @@
 class AuthenticateUser
+
   def initialize(email, password)
     @email, @password = email, password
   end
@@ -16,4 +17,5 @@ class AuthenticateUser
       return user if user && user.authenticate(password)
       raise(ExceptionHandler::AuthenticationError, Message.invalid_credentials)
     end
+
 end

@@ -1,30 +1,30 @@
 require 'rails_helper'
+require 'byebug'
 
 RSpec.describe 'LostPets API', type: :request do
   let(:user) { create(:user) }
   let!(:lost_pets) do
     10.times do
-      create(:lost_pet, :with_lost_feature_and_lost_location)
+      create(:lost_pet, :with_lost_feature_and_lost_location, user: user)
     end
     LostPet.all
   end
 
-  let(:name) { 'captain_u23_vn' }
-  let(:lost_time) { Time.current }
+  let(:name) { 'Vietnam U23 Captain' }
+  let(:lost_time) { Time.current.to_s }
   let(:breed) { 'dog' }
   let(:weight) { 5.5 }
-  let(:fur_color) { 'Vàng xanh' }
-  let(:others) { 'Mắt nâu đỏ, huyền đề 4 chân, đốm lưỡi' }
+  let(:fur_color) { 'black and white' }
+  let(:others) { 'brown eyes' }
   let(:age) { 2.5 }
-  let(:city) { 'Hồ Chí Minh' }
-  let(:district) { 'Tân Bình' }
+  let(:city) { 'Ho Chi Minh' }
+  let(:district) { 'Tan Binh' }
   let(:lost_pet_id) { lost_pets.first.id }
   let(:user_id) { user.id }
+  let(:headers) { valid_headers }
 
   describe 'GET /lost_pets' do
-
-    before { get '/lost_pets' }
-
+    before { get '/lost_pets', params: {}, headers: headers }
     it 'returns lost_pets' do
       # Note `json` is a custom helper to parse JSON responses
       expect(json).not_to be_empty
@@ -38,7 +38,7 @@ RSpec.describe 'LostPets API', type: :request do
 
   # Test suite for GET /lost_pets/:id
   describe 'GET /lost_pets/:id' do
-    before { get "/lost_pets/#{lost_pet_id}" }
+    before { get "/lost_pets/#{lost_pet_id}", params: {}.to_json, headers: headers }
 
     context 'when the record exists' do
       it 'returns the lost pet' do
@@ -89,7 +89,7 @@ RSpec.describe 'LostPets API', type: :request do
     end
 
     context 'when the request is valid' do
-      before { post '/lost_pets', params: valid_attributes }
+      before { post '/lost_pets', params: valid_attributes.to_json, headers: headers }
 
       it 'creates a lost pet' do
         expect(json['name']).to eq(name)
@@ -154,7 +154,8 @@ RSpec.describe 'LostPets API', type: :request do
       context 'invalid lost pet' do
         before do
           post '/lost_pets',
-               params: invalid_lost_pet
+               params:  invalid_lost_pet.to_json,
+               headers: headers
         end
         it 'returns status code 422' do
           expect(response).to have_http_status(422)
@@ -168,7 +169,8 @@ RSpec.describe 'LostPets API', type: :request do
       context 'invalid lost feature' do
         before do
           post '/lost_pets',
-               params: invalid_lost_feature
+               params:  invalid_lost_feature.to_json,
+               headers: headers
         end
         it 'returns status code 422' do
           expect(response).to have_http_status(422)
@@ -182,7 +184,8 @@ RSpec.describe 'LostPets API', type: :request do
       context 'invalid lost location' do
         before do
           post '/lost_pets',
-               params: invalid_lost_location
+               params:  invalid_lost_location.to_json,
+               headers: headers
         end
         it 'returns status code 422' do
           expect(response).to have_http_status(422)

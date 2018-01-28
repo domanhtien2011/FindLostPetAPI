@@ -2,8 +2,8 @@ FactoryBot.define do
 
   factory :user do
     name { Faker::Name.name }
-    sequence(:email) { |n| "#{name}_#{n}_@gmail.com" }
-    phone { Faker::PhoneNumber.cell_phone }
+    sequence(:email) { |n| "#{name.split(' ').join('_')}_#{n}_@gmail.com" }
+    phone { '123456789' }
     password 'password'
   end
 

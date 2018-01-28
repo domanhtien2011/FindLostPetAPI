@@ -1,7 +1,7 @@
 class LostPetsController < ApplicationController
 
   def index
-    @lost_pets = LostPet.all
+    @lost_pets = current_user.lost_pets
     json_response(@lost_pets)
   end
 
@@ -11,7 +11,7 @@ class LostPetsController < ApplicationController
   end
 
   def create
-    @lost_pet = LostPet.new(lost_pet_params).tap do |lost_pet|
+    @lost_pet = current_user.lost_pets.new(lost_pet_params).tap do |lost_pet|
       lost_pet.save!
       lost_pet.create_lost_feature!(lost_feature_params)
       lost_pet.create_lost_location!(lost_location_params)
