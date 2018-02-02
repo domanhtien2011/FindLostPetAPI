@@ -69,3 +69,5 @@ gem 'active_model_serializers', '~> 0.10.7'
 
 # will_paginate provides a simple API for performing paginated queries with Active Record, DataMapper and Sequel, and includes helpers for rendering pagination links in Rails, Sinatra and Merb web apps
 gem 'will_paginate', '~> 3.1', '>= 3.1.6'
+
+gem 'rack-cors', :require => 'rack/cors'

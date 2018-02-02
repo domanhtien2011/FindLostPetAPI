@@ -31,5 +31,11 @@ module FindLostPets
     config.api_only = true
     config.time_zone = 'Asia/Bangkok'
     config.i18n.default_locale = :vi
+    config.middleware.insert_before 0, Rack::Cors do
+        allow do
+          origins '*'
+          resource '*', :headers => :any, :methods => [:get, :post, :options]
+        end
+      end
   end
 end

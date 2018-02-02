@@ -1,11 +1,11 @@
 module V1
   class LostPetsController < ApplicationController
+    skip_before_action :authorize_request, only: :index
 
     def index
-      @lost_pets = current_user
-                     .lost_pets
-                     .paginate(page:     params[:page],
-                               per_page: 10)
+      @lost_pets = LostPet.all
+                          .paginate(page:     params[:page],
+                                    per_page: 10)
       json_response(@lost_pets)
     end
 
